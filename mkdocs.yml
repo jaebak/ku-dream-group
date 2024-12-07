@@ -1,0 +1,26 @@
+site_name: KU Particle Physics DREAM Group
+site_url: https://jaebak.github.io/ku-dream-group
+repo_url: https://github.com/jaebak/ku-dream-group
+theme:
+  name: material
+
+copyright: Made by Jaebak using MkDocs. Copyright &copy; 2024 - 2025 
+extra:
+  generator: false
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - attr_list
+  - pymdownx.blocks.caption
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Welcome: index.md
+  - People: people/people.md
+  - Research: research/research.md
+  - News: news/news.md
+  - Gallery: gallery/gallery.md
+  - Contact: contact/contact.md
