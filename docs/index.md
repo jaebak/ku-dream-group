@@ -78,7 +78,7 @@ Our group is investigating particle physics with the CMS (Compact Muon Solenoid)
 
 ## Contact
 
-Please contact Jaebak Kim in English or Korean, if you are interested in **particle physics, technology**, and the DREAM group,
+Please contact Jaebak Kim (jaebak.kim at cern.ch) in English or Korean, if you are interested in **particle physics, technology**, and the DREAM group,
 where the group is **open to all universities** around the globe. 
 (High school students are also welcome to contact to discuss about future hopes.)
 The **goal** is to expose the next generation to **interesting opportunities**
