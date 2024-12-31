@@ -5,7 +5,7 @@
 Measuring radiation effects at Texas A&M University Cyclotron 
 ///
 
-Welcome to the Korea University Particle Physics DREAM (DetectoR, Experiment, Analysis, Measurement) Group.
+Welcome to the Korea University Particle Physics DREAM (Design, Realize, Experiment, Analysis, Measurement) Group.
 The group **probes fundumental questions in particle physics with experiments**. 
 
 ## CMS experiment
