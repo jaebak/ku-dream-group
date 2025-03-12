@@ -4,4 +4,17 @@ Website can be found at https://jaebak.github.io/ku-dream-group/
 
 Developed with MkDocs Material.
 
-Running server: `mkdocs serve`
+# Installation
+```
+python3 -m venv mkdocs-env
+source mkdocs-env/bin/activate
+pip install --upgrade pip
+pip install mkdocs
+pip install mkdocs-material
+```
+
+# Running
+```
+source mkdocs-env/bin/activate
+mkdocs serve
+```

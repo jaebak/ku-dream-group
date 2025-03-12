@@ -6,7 +6,7 @@ Measuring radiation effects at Texas A&M University Cyclotron
 ///
 
 Welcome to the Korea University Particle Physics DREAM (Design, Realize, Experiment, Analysis, Measurement) Group.
-The group **probes fundumental questions in particle physics with experiments**. 
+The group **probes fundamental questions in particle physics with experiments**. 
 
 ## CMS experiment
 Our group is investigating particle physics with the CMS (Compact Muon Solenoid) experiment.
