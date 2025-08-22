@@ -1,5 +1,7 @@
 <style>
-  max-width: initial;  
+.md-grid{
+  max-width: 100%;  
+}
 </style>
 
 <div class="grid" markdown>
