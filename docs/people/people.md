@@ -41,6 +41,6 @@
 | Name | 남재현 | 
 | Title | Intern, Korea University | 
 | Office | Asan Science Building 441, Korea University |  
-| Topics | Machine Learning | 
+| Topics | $H \rightarrow Z \gamma$, Machine Learning | 
 
 # Past members
