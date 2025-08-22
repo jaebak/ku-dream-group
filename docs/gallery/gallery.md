@@ -1,4 +1,23 @@
-# Gallery
+<style>
+  max-width: initial;  
+</style>
+
+<div class="grid" markdown>
+
+![](2025.08.14.Lunch.jpg){ loading=lazy width="300" }
+/// caption
+(2025/08/14: Lunch with 남재현, 강미림)
+///
+
+![](2025.08.13.Lunch.jpg){ loading=lazy width="300" }
+/// caption
+(2025/08/13: Lunch with 박주강, 오준원, 조성범)
+///
+
+![](2025.08.06.Futsal.jpg){ width="300" }
+/// caption
+(2025/08/06: Futsal with 유재혁 교수님 연구실)
+///
 
 ![](2025.03.14.Lunch.jpg){ width="300" }
 /// caption
@@ -19,3 +38,5 @@
 /// caption
 (2023) Jaebak Kim measuring radiation effects at Texas A&M University Cyclotron 
 ///
+
+</div>
