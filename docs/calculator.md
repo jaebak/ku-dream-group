@@ -4,6 +4,7 @@
 책임교수 연봉 : <input type="text" id="pi_year_earning" placeholder="8000000" size="9"> (원)<br>
 책임교수 참여 비율: <input type="text" id="pi_percent" placeholder="50" size="1">  (%)<br>
 과제에서 인건비 비율: <input type="text" id="person_percent" placeholder="50" size="1"> (%)<br>
+수당 비율: <input type="text" id="extra_percent" placeholder="50" size="1"> (%)<br>
 <button onclick="calculate()">계산</button> 
 <p id="result"></p> 
 </div> 
@@ -14,11 +15,12 @@ function calculate() {
   const pi_year_earning = parseFloat(document.getElementById('pi_year_earning').value); 
   const pi_percent = parseFloat(document.getElementById('pi_percent').value); 
   const person_percent = parseFloat(document.getElementById('person_percent').value); 
+  const extra_percent = parseFloat(document.getElementById('extra_percent').value); 
   const pi_non_money = Math.floor(pi_year_earning * pi_percent * 0.01 * 0.001); 
   const actual_funding = total_funding * 0.8; 
   const person_funding = actual_funding * person_percent * 0.01;
-  const grad_funding = Math.floor((actual_funding * person_percent * 0.01 - pi_non_money*0.2)/1.2);
-  const insentive_funding = Math.floor((pi_non_money + grad_funding) * 0.2);
+  const grad_funding = Math.floor((actual_funding * person_percent * 0.01 - pi_non_money*extra_percent*0.01)/(1 + extra_percent*0.01));
+  const insentive_funding = Math.floor((pi_non_money + grad_funding) * extra_percent*0.01);
   const remaining_funding = actual_funding - grad_funding - insentive_funding;
   const pi_insentive_funding = Math.floor(insentive_funding * 0.7);
 
@@ -47,7 +49,7 @@ function calculate() {
   + '<tr><td>교수 수당 (천원)</td> <td>' + pi_insentive_funding + '</td></tr>';
   + '</table> <br>'
 
-  '미지급 계상률(원): ' + pi_percent + ' <br> ' 
+  + '미지급 계상률(원): ' + pi_percent + ' <br> ' 
   + '산출근거 연봉금액(원): ' + pi_year_earning + '<br>'
   + '총 인건비 (천원): 현금: 0 현물: 0 미지급인건비 계상기준금액 : ' + pi_non_money + '<br>'
   + '정부지원금 (천원): 현금: '+actual_funding+'<br>'
