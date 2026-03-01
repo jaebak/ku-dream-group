@@ -1,5 +1,8 @@
 # News
-
+- 2026.03.01: 이준혁 joins the lab as M.S.-Ph.D student
+- 2026.03.01: 송준혁 joins the lab as M.S. student
+- 2025.11.30: 강미림 leaves the lab as intern
+- 2025.08.30: 남재현 leaves the lab as intern
 - 2025.09.01: 조성범 joins the lab as Ph.D student
 - 2025.09.01: 오준원 joins the lab as Ph.D student
 - 2025.09.01: 박주강 joins the lab as M.S.-Ph.D student

@@ -12,7 +12,7 @@ which makes the data analysis challenging.
 Our group is developing methods to improve the sensitivity and reliability of the data analysis.
 
 * Period: 2025 ~ current
-* People: Jaebak Kim
+* People: Jaebak Kim, 조성범
 * Goal: Paper with early Run-3 + Run-2 data
 
 ### Search for Higgsino (Supersymmetry particle) with Higgs bosons. 
@@ -27,19 +27,28 @@ predicted to be produced at a small rate.
 Our group is searching for Higgsinos that have Higgs bosons in their decay. 
 
 * Period: 2025 ~ current
-* People: Jaebak Kim
+* People: Jaebak Kim, 오준원
 * Goal: Paper with early Run-3 + Run-2 data
 
-### Improving data analysis performance with machine learning techniques such as artificial intelligence. 
+### Level 1 FPGA trigger for CMS experiment
 
-Experimental particle physics has a long history in using 
-machine learning techniques for analyzing data. 
-The recent artificial intelligence developments 
-in the natural language field are giving impacts to experimental particle physics,
-where recent neural network structures are being adapted and applied.
-Our group is developing recent machine learning techniques 
-to improve the performance of data analyses.
+The CMS experiment collides protons at 40 MHz. 
+Since this rate is too fast for CPUs to process,
+FPGAs are used to select interesting collision events,
+which are then sent to CPUs.
+Our group develops algorithms on FPGAs for the CMS experiment.
 
 * Period: 2025 ~ current
-* People: Jaebak Kim
-* Goal: Improvement of analysis performance
+* People: Jaebak Kim, 오준원, 송준혁
+* Goal: Higher efficiency of L1 triggers
+
+### MTD readout for CMS experiment
+
+The CMS experiment is developing MTD detectors that have precise timing resolution.
+Parts of the detector are being created in South Korea.
+To test the detector a readout of the system is needed.
+Our group is developing a readout system for the MTD.
+
+* Period: 2025 ~ current
+* People: Jaebak Kim, 박주강, 조성범, 송준혁
+* Goal: Readout MTD detector

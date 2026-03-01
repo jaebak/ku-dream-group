@@ -19,7 +19,7 @@ Our group is investigating particle physics with the CMS (Compact Muon Solenoid)
 - What is the shape of the Higgs potential that determines the fate of the universe?
 - What is the source of the **matter anti-matter asymmetry** observed in the universe?
 
-**Technical** explaination of the experiement, where one can develop and get experience on these technologies.
+**Technical** aspects of the experiement, where one can develop and get experience on these technologies.
 
 1. Particles are created by **accelerating protons** to collide with each other at **high energies (13-14 TeV)**.
 1. These particles pass through **silicon, scintillator, and gas detectors** which create electric pulses.
@@ -32,7 +32,7 @@ Our group is investigating particle physics with the CMS (Compact Muon Solenoid)
 
 ## Research interests
 
-### Year 2025
+### Year [2026 - 2025]
 
 | CMS physics data analysis | Motivation | 
 | ---- | ---- |
@@ -40,14 +40,14 @@ Our group is investigating particle physics with the CMS (Compact Muon Solenoid)
 | Higgsino decaying to a Higgs boson and Neutralino | Do SUSY particles (Higgsino, Neutralino) exist? |
 | | |
 | **Technology development** | |
-| Transformer neural network | Using Large Language Model network structures in Particle Physics | 
-| Firmware (FPGA) | For efficient triggering and high speed DAQ | 
+| L1 trigger for CMS detector | Fast hardware triggering for CMS | 
+| CMS MTD detector readout | CMS MTD detector readout for quality control and assurance | 
 
 ## Group leader's (Jaebak Kim) biography
 
 | Year | Title | Location | 
 | ---- | ---- | ---- |
-| 2025 - 2025 | **Assistant Professor of Physics** | Korea University | 
+| 2025 - 2026 | **Assistant Professor of Physics** | Korea University | 
 | 2019 - 2025 | **Researcher in Particle Physics in CMS experiment** | University of California, Santa Barbara | 
 | | (2024) [Training toward significance with the decorrelated event classifier transformer neural network](https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.096035) | Sole author paper | 
 | | (2024) [Combined search for electroweak production of winos, binos, higgsinos, and sleptons in proton-proton at sqrt(s) = 13 TeV](https://journals.aps.org/prd/abstract/10.1103/PhysRevD.109.112001) | Primary author paper | 
