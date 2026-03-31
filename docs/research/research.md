@@ -52,3 +52,7 @@ Our group is developing a readout system for the MTD.
 * Period: 2025 ~ current
 * People: Jaebak Kim, 박주강, 조성범, 송준혁
 * Goal: Readout MTD detector
+
+### Documentation
+
+- [Install Vivado On Mac Silicon](InstallVivadoOnMacOS.md)
