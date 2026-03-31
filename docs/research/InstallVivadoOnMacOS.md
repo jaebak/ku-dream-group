@@ -264,7 +264,7 @@ cd $WORK_DIR
 docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
 ```
 
-C. Connect to VNC server with vncviewer
+C. Connect to VNC server with vncviewer, where password is `password`
 
 `/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full`
 
