@@ -20,7 +20,7 @@ Can use an external usb drive for the disk space.
 5. Install cable application on MacOS
 6. Install vncviewer
 
-There will be two folders used in installation.
+There will be two folders used in installation, where the two folders can be set to be the same path.
 
   - `WORK_DIR`: Folder used when running vivado. Requries few GB of disk space.
   - `INSTALL_DIR`: Folder that holds vivado. Requires over 64 GB of disk space.
@@ -247,7 +247,7 @@ Download and install vnc viewer from [https://www.realvnc.com/en/connect/downloa
 
 ### Running Vivado
 
-A. Open xvc cable application on MacOS
+A. Open `xvc` cable application on MacOS
 
 `openFPGALoader -c ft2232 --xvc`
 
@@ -255,6 +255,7 @@ B. Run VNC server for GUI
 
 
 ```
+# If two folders were set to be same path during Vivado installation, can set paths to be the same below.
 export WORK_DIR=~/my_work
 export INSTALL_DIR=/Volumes/my_usb/xilinx
 
@@ -264,7 +265,7 @@ cd $WORK_DIR
 docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
 ```
 
-C. Connect to VNC server with vncviewer, where password is `password`
+C. Connect to VNC server with `vncviewer`, where the password is `password`
 
 `/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full`
 
