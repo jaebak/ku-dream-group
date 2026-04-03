@@ -102,7 +102,7 @@
 
   <div style="margin-top: 1rem;">
     <label for="rp-default"><strong>Predefined numbers</strong></label><br>
-    <textarea id="rp-default" rows="3" style="width:100%;"></textarea>
+    <textarea id="rp-default" rows="3" style="width:100%;">680</textarea>
     <div style="font-size: 0.9em; opacity: 0.8;">
       These are included by default before random picks are added.
     </div>
