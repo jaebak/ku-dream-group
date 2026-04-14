@@ -2,7 +2,7 @@
 
 Run Vivado 2025.2 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.
 
-![](VivadoWithVNC.jpg){width="600"}
+![](VivadoOnMacSilicon.jpeg){width="600"}
 
 ### Method
 
@@ -22,14 +22,14 @@ Can use an external usb drive for the disk space.
 
 There will be two folders used in installation, where the two folders can be set to be the same path.
 
-  - `WORK_DIR`: Folder used when running vivado. Requries few GB of disk space.
-  - `INSTALL_DIR`: Folder that holds vivado. Requires over 64 GB of disk space.
+  - `WORK_DIR`: Folder used when running vivado. Requries few GB of disk space for docker and linux image.
+  - `INSTALL_DIR`: Folder that holds vivado. Requires around 64 GB of disk space. Can use a USB drive with Mac OS Extended format for small disk cluster size.
 
 To make it easy to change path, we can set environment variable, where below is an example
 
 ```
 export WORK_DIR=~/my_work
-export INSTALL_DIR=/Volumes/my_usb/xilinx
+export INSTALL_DIR=/Volumes/my_usb/Xilinx
 ```
 
 #### 1. Install docker
@@ -106,6 +106,9 @@ RUN echo "password" | vncpasswd -f > /vncpasswd
 RUN chown user /vncpasswd
 RUN chmod 600 /vncpasswd
 
+# Make path for Vivado
+RUN mkdir /opt/Xilinx
+
 # Set the locale, because Vivado crashes otherwise
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
@@ -143,23 +146,20 @@ D. Get into a Ubuntu container
 cd $WORK_DIR
 
 # Run docker
-docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user bash
+docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user bash
 ```
 
-E. Install Vivado
+E. (Inside Ubuntu container) Install Vivado
 
 ```
-# Make folder for vivado installation
-mkdir /opt/Xilinx
-
 # Go into work folder, which should be home
 cd ~
 
 # Setup AMD installer
-./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin --target /home/user/installer --noexec
+./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin --target /opt/Xilinx/installer --noexec
 
 # Create file for AMD account details
-/home/user/installer/xsetup -b AuthTokenGen
+/opt/Xilinx/installer/xsetup -b AuthTokenGen
 
 # Create installation setting
 cat > vivado_install_settings.txt << EOF
@@ -168,7 +168,7 @@ Edition=Vivado ML Standard
 
 Product=Vivado
 
-# Path where AMD FPGAs & Adaptive SoCs software will be installed.
+# Path where AMD FPGAs & Adaptive SoCs software will be temporary installed. Using home to download files more stably. 
 Destination=/opt/Xilinx
 
 # Choose the Products/Devices the you would like to install.
@@ -187,7 +187,7 @@ CreateProgramGroupShortcuts=1
 ProgramGroupFolder=Xilinx Design Tools
 
 # Choose whether shortcuts will be created for All users or just the Current user. Shortcut
-CreateShortcutsForAllUsers=1
+CreateShortcutsForAllUsers=0
 
 # Choose whether shortcuts will be created on the desktop or not.
 CreateDesktopShortcuts=1
@@ -197,8 +197,8 @@ CreateFileAssociation=1
 
 EOF
 
-# Install vivado
-/home/user/installer/xsetup -c vivado_install_settings.txt -b Install -a "XilinxEULA,3rdPartyEULA"
+# Install vivado. This will take one to two hours.
+/opt/Xilinx/installer/xsetup -c vivado_install_settings.txt -b Install -a "XilinxEULA,3rdPartyEULA"
 
 # Exit docker container
 exit
@@ -214,9 +214,9 @@ cd $WORK_DIR
 cat > linux_run_vivado.sh << EOF
 export LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-x11-2.0.so.0"
 
-/home/user/Xilinx/*/Vivado/bin/hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:3721" &
-source /home/user/Xilinx/*/Vivado/settings64.sh
-/home/user/Xilinx/*/Vivado/bin/vivado
+/opt/Xilinx/*/Vivado/bin/hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:3721" &
+source /opt/Xilinx/*/Vivado/settings64.sh
+/opt/Xilinx/*/Vivado/bin/vivado
 EOF
 
 chmod +x linux_run_vivado.sh
@@ -247,9 +247,9 @@ Download and install vnc viewer from [https://www.realvnc.com/en/connect/downloa
 
 ### Running Vivado
 
-A. Open `xvc` cable application on MacOS
+(Optional) A. Connect FPGA board to Mac and open `xvc` cable application on MacOS with below command.
 
-`openFPGALoader -c ft2232 --xvc`
+`openFPGALoader -c digilent --xvc`
 
 B. Run VNC server for GUI
 
@@ -262,7 +262,7 @@ export INSTALL_DIR=/Volumes/my_usb/xilinx
 cd $WORK_DIR
 
 # Run VNC
-docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
+docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
 ```
 
 C. Connect to VNC server with `vncviewer`, where the password is `password`
