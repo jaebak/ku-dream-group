@@ -1,3 +1,7 @@
+:root > * {
+  --md-primary-fg-color: #790030;
+}
+
 input, button {
   font-size: 16px;
 }
@@ -9,3 +13,4 @@ button {
 }
 
 white-space: pre;
+

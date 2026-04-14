@@ -3,6 +3,8 @@ site_url: https://jaebak.github.io/ku-dream-group
 repo_url: https://github.com/jaebak/ku-dream-group
 theme:
   name: material
+  palette:
+    primary: custom
 
 copyright: Made by Jaebak using MkDocs. Copyright &copy; 2024 - 2026 
 extra:
