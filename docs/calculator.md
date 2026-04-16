@@ -5,6 +5,7 @@
 책임교수 참여 비율: <input type="text" id="pi_percent" placeholder="50" size="1">  (%)<br>
 과제에서 인건비 비율: <input type="text" id="person_percent" placeholder="50" size="1"> (%)<br>
 수당 비율: <input type="text" id="extra_percent" placeholder="50" size="1"> (%)<br>
+간접비: <input type="text" id="univ_percent" placeholder="20" size="1"> (%)<br>
 <button onclick="calculate()">계산</button> 
 <p id="result"></p> 
 </div> 
@@ -16,8 +17,10 @@ function calculate() {
   const pi_percent = parseFloat(document.getElementById('pi_percent').value); 
   const person_percent = parseFloat(document.getElementById('person_percent').value); 
   const extra_percent = parseFloat(document.getElementById('extra_percent').value); 
+  const univ_percent = parseFloat(document.getElementById('univ_percent').value); 
   const pi_non_money = Math.floor(pi_year_earning * pi_percent * 0.01 * 0.001); 
-  const actual_funding = total_funding * 0.8; 
+  const actual_funding = total_funding * (1 - univ_percent * 0.01); 
+  const univ_funding = total_funding * (univ_percent * 0.01); 
   const person_funding = actual_funding * person_percent * 0.01;
   const grad_funding = Math.floor((actual_funding * person_percent * 0.01 - pi_non_money*extra_percent*0.01)/(1 + extra_percent*0.01));
   const insentive_funding = Math.floor((pi_non_money + grad_funding) * extra_percent*0.01);
@@ -43,6 +46,7 @@ function calculate() {
   + '<tr><td> 통합 학생인건비(학생인건비 특례) </td> <td> '+grad_funding+' </td> <td> 0 </td> <td> - </td> </tr>'
   + '<tr><td> 남은 과제 비용 </td> <td>'+ remaining_funding+'</td><td> 0 </td> <td> - </td> </tr>'
   + '<tr><td> 연구수당 </td> <td> '+insentive_funding+' </td> <td> 0 </td> <td> - </td> </tr>'
+  + '<tr><td> 간접비 </td> <td> '+univ_funding+' </td> <td> 0 </td> <td> - </td> </tr>'
   + '</table> <br>'
   
   + '<table>'
@@ -58,6 +62,7 @@ function calculate() {
   + '연구수당 (천원): 현금: ' + insentive_funding + ' 현물: 0 <br>'
   + '인건비 외 연구비 (천원): 현금: ' + remaining_funding + ' 현물: 0 <br>'
   + '교수 수당 (천원): ' + pi_insentive_funding + ' <br>'
+  + '간접비 (천원): ' + univ_funding + ' <br>'
 
 
 }
