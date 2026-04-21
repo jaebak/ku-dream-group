@@ -3,6 +3,7 @@ site_url: https://jaebak.github.io/ku-dream-group
 repo_url: https://github.com/jaebak/ku-dream-group
 theme:
   name: material
+  custom_dir: overrides
   palette:
     primary: custom
 
