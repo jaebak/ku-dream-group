@@ -1,3 +1,7 @@
+---
+title:  Install Vivado on Apple silicon with MacOS
+---
+
 ### Goal
 
 Run Vivado 2025.2 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.
