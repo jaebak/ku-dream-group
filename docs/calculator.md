@@ -19,8 +19,8 @@ function calculate() {
   const extra_percent = parseFloat(document.getElementById('extra_percent').value); 
   const univ_percent = parseFloat(document.getElementById('univ_percent').value); 
   const pi_non_money = Math.floor(pi_year_earning * pi_percent * 0.01 * 0.001); 
-  const actual_funding = total_funding * (1 - univ_percent * 0.01); 
-  const univ_funding = total_funding * (univ_percent * 0.01); 
+  const actual_funding = total_funding / (1 + univ_percent * 0.01); 
+  const univ_funding = actual_funding * (univ_percent * 0.01); 
   const person_funding = actual_funding * person_percent * 0.01;
   const grad_funding = Math.floor((actual_funding * person_percent * 0.01 - pi_non_money*extra_percent*0.01)/(1 + extra_percent*0.01));
   const insentive_funding = Math.floor((pi_non_money + grad_funding) * extra_percent*0.01);
