@@ -102,8 +102,20 @@
 
   <div style="margin-top: 1rem;">
     <label for="rp-default"><strong>Predefined numbers</strong></label><br>
-    <textarea id="rp-default" rows="3" style="width:100%;">680
-161</textarea>
+    <textarea id="rp-default" rows="3" style="width:100%;">141
+129
+164
+188
+181
+122
+680
+175
+170
+148
+137
+146
+121
+</textarea>
     <div style="font-size: 0.9em; opacity: 0.8;">
       These are included by default before random picks are added.
     </div>
