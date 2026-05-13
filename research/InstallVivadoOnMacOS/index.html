@@ -1,0 +1,847 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://jaebak.github.io/ku-dream-group/research/InstallVivadoOnMacOS/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Install Vivado on Apple silicon with MacOS - Korea Univeristy Experimental Particle Physics DREAM Group</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <meta name="google-site-verification" content="Cd7yU1v2P-xCL7OIOr-MgeTGI26oCsTG6XOu_zcFVzs" />
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#goal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Korea Univeristy Experimental Particle Physics DREAM Group" class="md-header__button md-logo" aria-label="Korea Univeristy Experimental Particle Physics DREAM Group" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Korea Univeristy Experimental Particle Physics DREAM Group
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install Vivado on Apple silicon with MacOS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jaebak/ku-dream-group" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Korea Univeristy Experimental Particle Physics DREAM Group" class="md-nav__button md-logo" aria-label="Korea Univeristy Experimental Particle Physics DREAM Group" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Korea Univeristy Experimental Particle Physics DREAM Group
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jaebak/ku-dream-group" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../people/people/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    People
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../news/news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gallery/gallery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gallery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-install-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-build-ubuntu-2204-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Build Ubuntu 22.04 image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-install-vivado-in-a-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Install Vivado in a folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-make-scripts-to-run-vivado-automatically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Make scripts to run Vivado automatically
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-install-cable-application-on-macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Install cable application on MacOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-install-vncviewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Install vncviewer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-vivado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Vivado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Install Vivado on Apple silicon with MacOS</h1>
+
+<h3 id="goal">Goal</h3>
+<p>Run Vivado 2025.2 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.</p>
+<p><img alt="" src="../VivadoOnMacSilicon.jpeg" width="600" /></p>
+<h3 id="method">Method</h3>
+<ol>
+<li>Run a Ubuntu 22.04 docker container to run Vivado which utilizes Rosetta. </li>
+<li>Use <code>openfpgaloader</code> to connect Mac's USB with Vivado, which utilizes <code>xvc</code>.</li>
+</ol>
+<p>Note that it will requires over 64 GB of disk space. 
+Can use an external usb drive for the disk space.</p>
+<h3 id="installation-steps">Installation Steps</h3>
+<ol>
+<li>Install docker</li>
+<li>Build Ubuntu 22.04 image </li>
+<li>Install Vivado in folder</li>
+<li>Make scripts to run Vivado automatically</li>
+<li>Install cable application on MacOS</li>
+<li>Install vncviewer</li>
+</ol>
+<p>There will be two folders used in installation, where the two folders can be set to be the same path.</p>
+<ul>
+<li><code>WORK_DIR</code>: Folder used when running vivado. Requries few GB of disk space for docker and linux image.</li>
+<li><code>INSTALL_DIR</code>: Folder that holds vivado. Requires around 64 GB of disk space. Can use a USB drive with Mac OS Extended format for small disk cluster size.</li>
+</ul>
+<p>To make it easy to change path, we can set environment variable, where below is an example</p>
+<pre><code>export WORK_DIR=~/my_work
+export INSTALL_DIR=/Volumes/my_usb/Xilinx
+</code></pre>
+<h4 id="1-install-docker">1. Install docker</h4>
+<p>A. Install Rosetta</p>
+<p><code>softwareupdate --install-rosetta --agree-to-license</code></p>
+<p>B. Download docker from <a href="https://desktop.docker.com/mac/main/arm64/Docker.dmg">https://desktop.docker.com/mac/main/arm64/Docker.dmg</a></p>
+<p>C. Run docker application to complete installation. Can select recommended settings.</p>
+<p>D. Increase container SWAP setting in docker settings</p>
+<ul>
+<li>Settings -&gt; Resources -&gt; Swap: 4 GB</li>
+</ul>
+<h4 id="2-build-ubuntu-2204-image">2. Build Ubuntu 22.04 image</h4>
+<p>A. Go to a work folder</p>
+<pre><code>mkdir $WORK_DIR
+cd $WORK_DIR
+</code></pre>
+<p>B. Create Dockerfile to make image</p>
+<pre><code>cat &gt; Dockerfile &lt;&lt;EOF
+# Container for running Vivado
+FROM --platform=linux/amd64 ubuntu:22.04
+RUN apt-get update &amp;&amp; apt-get upgrade -y
+
+# Fix the error of build failing due to not having the frontend installed
+# This enviroment auto fallbacks to noninteractive mode, with the declaration following this guidance:
+# https://bobcares.com/blog/debian_frontendnoninteractive-docker/
+# https://github.com/moby/moby/issues/4032#issuecomment-34597177
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Check and install ca-certificates earlier if Rosetta gets broken
+RUN apt -y install ca-certificates
+
+# install gui
+RUN apt-get install -y --no-install-recommends \
+    dbus dbus-x11 x11-utils xorg alsa-utils mesa-utils net-tools \
+    libgl1-mesa-dri gtk2-engines lxappearance fonts-droid-fallback sudo firefox \
+    ubuntu-gnome-default-settings curl gnupg lxde arc-theme \
+    gtk2-engines-murrine gtk2-engines-pixbuf gnome-themes-standard nano xterm
+
+# install dependencies for Vivado
+RUN apt-get install -y --no-install-recommends \
+    python3-pip python3-dev build-essential git gcc-multilib g++ \
+    ocl-icd-opencl-dev libjpeg62-dev libc6-dev-i386 graphviz make \
+    unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni
+
+# install vnc server (with recommended installs)
+RUN apt-get install -y \
+    tigervnc-standalone-server tigervnc-xorg-extension
+
+# create user &quot;user&quot; with password &quot;password&quot; 
+RUN useradd --create-home --shell /bin/bash --user-group --groups adm,sudo user
+RUN sh -c 'echo &quot;user:password&quot; | chpasswd'
+RUN chown -R user:user /home/user
+
+# setup LXDE
+RUN mkdir -p /home/user/.config/pcmanfm/LXDE/
+RUN ln -sf /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf \
+    /home/user/.config/pcmanfm/LXDE/
+RUN mv /usr/bin/lxpolkit /usr/bin/lxpolkit.bak
+
+# setup TigerVNC
+RUN sed -i 's/-iconic/-nowin/g' /etc/X11/Xtigervnc-session
+RUN mkdir /home/user/.vnc
+RUN echo &quot;password&quot; | vncpasswd -f &gt; /vncpasswd
+RUN chown user /vncpasswd
+RUN chmod 600 /vncpasswd
+
+# Make path for Vivado
+RUN mkdir /opt/Xilinx
+
+# Set the locale, because Vivado crashes otherwise
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen &amp;&amp; \
+    locale-gen
+EOF
+</code></pre>
+<p>C.  Build docker image</p>
+<p><code>docker build --platform linux/amd64 -t x64-linux ./</code></p>
+<h4 id="3-install-vivado-in-a-folder">3. Install Vivado in a folder</h4>
+<p>A. Make folder that can store Vivado, which needs more than 64 GB.</p>
+<p><code>mkdir $INSTALL_DIR</code></p>
+<p>B. Download Vivado 2025.2 (Linux Web installer) from 
+<a href="https://www.xilinx.com/support/download.html">https://www.xilinx.com/support/download.html</a>. An AMD account is required.</p>
+<p>C. Setup downloaded installer.</p>
+<pre><code># Move installer to work folder
+cd $WORK_DIR
+mv ~/Downloads/FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin .
+
+# Make installer an executable.
+chmod +x FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin
+</code></pre>
+<p>D. Get into a Ubuntu container</p>
+<pre><code># Go to folder
+cd $WORK_DIR
+
+# Run docker
+docker run --init -it --rm --name vivado_container --mount type=bind,source=&quot;$WORK_DIR&quot;,target=&quot;/home/user&quot; --mount type=bind,source=&quot;$INSTALL_DIR&quot;,target=&quot;/opt/Xilinx&quot; -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user bash
+</code></pre>
+<p>E. (Inside Ubuntu container) Install Vivado</p>
+<pre><code># Go into work folder, which should be home
+cd ~
+
+# Setup AMD installer
+./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin --target /opt/Xilinx/installer --noexec
+
+# Create file for AMD account details
+/opt/Xilinx/installer/xsetup -b AuthTokenGen
+
+# Create installation setting
+cat &gt; vivado_install_settings.txt &lt;&lt; EOF
+#### Vivado ML Standard Install Configuration ####
+Edition=Vivado ML Standard
+
+Product=Vivado
+
+# Path where AMD FPGAs &amp; Adaptive SoCs software will be temporary installed. Using home to download files more stably. 
+Destination=/opt/Xilinx
+
+# Choose the Products/Devices the you would like to install.
+# Less modules will be less disk space.
+# Modules=Virtex UltraScale+ HBM:1,Kintex UltraScale:1,Vitis Networking P4:0,Artix UltraScale+:1,Spartan-7:1,Artix-7:1,Virtex UltraScale+:1,DocNav:1,Zynq UltraScale+ MPSoC:1,Zynq-7000:1,Virtex UltraScale+ 58G:1,Power Design Manager (PDM):0,Vitis Embedded Development:0,Kintex-7:1,Install Devices for Kria SOMs and Starter Kits:1,Kintex UltraScale+:1
+Modules=Artix-7:1,DocNav:1,Zynq-7000:1
+
+# Choose the post install scripts you'd like to run as part of the finalization step. Pleas
+InstallOptions=
+
+## Shortcuts and File associations ##
+# Choose whether Start menu/Application menu shortcuts will be created or not.
+CreateProgramGroupShortcuts=1
+
+# Choose the name of the Start menu/Application menu shortcut. This setting will be ignored
+ProgramGroupFolder=Xilinx Design Tools
+
+# Choose whether shortcuts will be created for All users or just the Current user. Shortcut
+CreateShortcutsForAllUsers=0
+
+# Choose whether shortcuts will be created on the desktop or not.
+CreateDesktopShortcuts=1
+
+# Choose whether file associations will be created or not.
+CreateFileAssociation=1
+
+EOF
+
+# Install vivado. This will take one to two hours.
+/opt/Xilinx/installer/xsetup -c vivado_install_settings.txt -b Install -a &quot;XilinxEULA,3rdPartyEULA&quot;
+
+# Exit docker container
+exit
+</code></pre>
+<h4 id="4-make-scripts-to-run-vivado-automatically">4. Make scripts to run Vivado automatically</h4>
+<p>A. Make linux script to run vivado and hw_server</p>
+<pre><code>cd $WORK_DIR
+
+cat &gt; linux_run_vivado.sh &lt;&lt; EOF
+export LD_PRELOAD=&quot;/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-x11-2.0.so.0&quot;
+
+/opt/Xilinx/*/Vivado/bin/hw_server -e &quot;set auto-open-servers xilinx-xvc:host.docker.internal:3721&quot; &amp;
+source /opt/Xilinx/*/Vivado/settings64.sh
+/opt/Xilinx/*/Vivado/bin/vivado
+EOF
+
+chmod +x linux_run_vivado.sh
+</code></pre>
+<p>B. Make script to start vivado automatically that uses step A script.</p>
+<pre><code>mkdir -p $WORK_DIR/.config/autostart
+
+cat &gt; $WORK_DIR/.config/autostart/vivado.desktop &lt;&lt; EOF 
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Launch Start Script
+Comment=Launch Start Script
+Exec=/usr/bin/lxterminal -e '/home/user/linux_run_vivado.sh'
+EOF
+</code></pre>
+<h4 id="5-install-cable-application-on-macos">5. Install cable application on MacOS</h4>
+<p><code>brew install openfpgaloader</code></p>
+<h4 id="6-install-vncviewer">6. Install vncviewer</h4>
+<p>Download and install vnc viewer from <a href="https://www.realvnc.com/en/connect/download/viewer/macos/">https://www.realvnc.com/en/connect/download/viewer/macos/</a></p>
+<h3 id="running-vivado">Running Vivado</h3>
+<p>(Optional) A. Connect FPGA board to Mac and open <code>xvc</code> cable application on MacOS with below command.</p>
+<p><code>openFPGALoader -c digilent --xvc</code></p>
+<p>B. Run VNC server for GUI</p>
+<pre><code># If two folders were set to be same path during Vivado installation, can set paths to be the same below.
+export WORK_DIR=~/my_work
+export INSTALL_DIR=/Volumes/my_usb/xilinx
+
+cd $WORK_DIR
+
+# Run VNC
+docker run --init -it --rm --name vivado_container --mount type=bind,source=&quot;$WORK_DIR&quot;,target=&quot;/home/user&quot; --mount type=bind,source=&quot;$INSTALL_DIR&quot;,target=&quot;/opt/Xilinx&quot; -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys &quot;0xffe9-&gt;0xff7e,0xffe7-&gt;0xff7e&quot; -- LXDE
+</code></pre>
+<p>C. Connect to VNC server with <code>vncviewer</code>, where the password is <code>password</code></p>
+<p><code>/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full</code></p>
+<h3 id="references">References</h3>
+<ul>
+<li><a href="https://github.com/ichi4096/vivado-on-silicon-mac">https://github.com/ichi4096/vivado-on-silicon-mac</a></li>
+<li><a href="https://github.com/yokeTH/vivado-mac">https://github.com/yokeTH/vivado-mac</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Made by Jaebak using MkDocs. Copyright &copy; 2024 - 2026
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
