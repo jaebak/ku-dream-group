@@ -279,10 +279,10 @@ C. Connect to VNC server with `vncviewer`, where the password is `password`
 
 ### A simple script that starts vivado
 
-Below creates a script `start_vivado.sh` that starts vivado. It also closes related programs when `vncviewer` is closed.
+Below creates a script `mac_run_vivado.sh` that starts Vivado on the Mac. It also closes related programs when `vncviewer` is closed.
 
 ```
-cat > start_vivado.sh <<EOF
+cat > mac_run_vivado.sh <<EOF
 #!/bin/bash
 
 # This is called when the container stops or ctrl+c is hit
@@ -322,7 +322,7 @@ done
 stop_container
 EOF
 
-chmod +x start_vivado.sh
+chmod +x mac_run_vivado.sh
 ```
 
 ### References
