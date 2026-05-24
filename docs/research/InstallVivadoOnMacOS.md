@@ -277,7 +277,7 @@ C. Connect to VNC server with `vncviewer`, where the password is `password`
 
 `/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full`
 
-### A simple script that starts vivado
+### Simple script that runs Vivado on Mac with above commands.
 
 Below creates a script `mac_run_vivado.sh` that starts Vivado on the Mac. It also closes related programs when `vncviewer` is closed.
 
