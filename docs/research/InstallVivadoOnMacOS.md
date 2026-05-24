@@ -26,13 +26,13 @@ Can use an external usb drive for the disk space.
 
 There will be two folders used in installation, where the two folders can be set to be the same path.
 
-  - `WORK_DIR`: Folder used when running vivado. Requries few GB of disk space for docker and linux image.
+  - `VM_HOME_DIR`: Folder used for viertual machine home when running vivado. Requries few GB of disk space for docker and linux image.
   - `INSTALL_DIR`: Folder that holds vivado. Requires around 64 GB of disk space. Can use a USB drive with Mac OS Extended format for small disk cluster size.
 
 To make it easy to change path, we can set environment variable, where below is an example
 
 ```
-export WORK_DIR=~/my_work
+export VM_HOME_DIR=~/my_work
 export INSTALL_DIR=/Volumes/my_usb/Xilinx
 ```
 
@@ -54,8 +54,8 @@ D. Increase container SWAP setting in docker settings
 A. Go to a work folder
 
 ```
-mkdir $WORK_DIR
-cd $WORK_DIR
+mkdir $VM_HOME_DIR
+cd $VM_HOME_DIR
 ```
 
 B. Create Dockerfile to make image
@@ -136,7 +136,7 @@ C. Setup downloaded installer.
 
 ```
 # Move installer to work folder
-cd $WORK_DIR
+cd $VM_HOME_DIR
 mv ~/Downloads/FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin .
 
 # Make installer an executable.
@@ -147,10 +147,10 @@ D. Get into a Ubuntu container
 
 ```
 # Go to folder
-cd $WORK_DIR
+cd $VM_HOME_DIR
 
 # Run docker
-docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user bash
+docker run --init -it --rm --name vivado_container --mount type=bind,source="$VM_HOME_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user bash
 ```
 
 E. (Inside Ubuntu container) Install Vivado
@@ -194,7 +194,7 @@ ProgramGroupFolder=Xilinx Design Tools
 CreateShortcutsForAllUsers=0
 
 # Choose whether shortcuts will be created on the desktop or not.
-CreateDesktopShortcuts=1
+CreateDesktopShortcuts=0
 
 # Choose whether file associations will be created or not.
 CreateFileAssociation=1
@@ -213,7 +213,7 @@ exit
 A\. Make linux script to run vivado and hw_server
 
 ```
-cd $WORK_DIR
+cd $VM_HOME_DIR
 
 cat > linux_run_vivado.sh << EOF
 export LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-x11-2.0.so.0"
@@ -229,9 +229,9 @@ chmod +x linux_run_vivado.sh
 B. Make script to start vivado automatically that uses step A script.
 
 ```
-mkdir -p $WORK_DIR/.config/autostart
+mkdir -p $VM_HOME_DIR/.config/autostart
 
-cat > $WORK_DIR/.config/autostart/vivado.desktop << EOF 
+cat > $VM_HOME_DIR/.config/autostart/vivado.desktop << EOF 
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -249,6 +249,10 @@ EOF
 
 Download and install vnc viewer from [https://www.realvnc.com/en/connect/download/viewer/macos/](https://www.realvnc.com/en/connect/download/viewer/macos/)
 
+#### 7. Clean up files
+
+`rm -rf $VM_HOME_DIR/FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin $VM_HOME_DIR/Dockerfile $VM_HOME_DIR/vivado_install_settings.txt $INSTALL_DIR/installer`
+
 ### Running Vivado
 
 (Optional) A. Connect FPGA board to Mac and open `xvc` cable application on MacOS with below command.
@@ -260,18 +264,66 @@ B. Run VNC server for GUI
 
 ```
 # If two folders were set to be same path during Vivado installation, can set paths to be the same below.
-export WORK_DIR=~/my_work
+export VM_HOME_DIR=~/my_work
 export INSTALL_DIR=/Volumes/my_usb/xilinx
 
-cd $WORK_DIR
+cd $VM_HOME_DIR
 
 # Run VNC
-docker run --init -it --rm --name vivado_container --mount type=bind,source="$WORK_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
+docker run --init -it --rm --name vivado_container --mount type=bind,source="$VM_HOME_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
 ```
 
 C. Connect to VNC server with `vncviewer`, where the password is `password`
 
 `/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full`
+
+### A simple script that starts vivado
+
+Below creates a script `start_vivado.sh` that starts vivado. It also closes related programs when `vncviewer` is closed.
+
+```
+cat > start_vivado.sh <<EOF
+#!/bin/bash
+
+# This is called when the container stops or ctrl+c is hit
+function stop_container {
+    docker kill vivado_container > /dev/null 2>&1
+    echo "Stopped Docker container"
+    killall "Docker Desktop"
+    exit 0
+}
+trap 'stop_container' INT
+
+# Start docker
+echo "Launching Docker daemon..."
+# Wait for Docker to start
+while ! docker ps &> /dev/null
+do
+    open -a Docker
+    sleep 5
+done
+
+# Run container
+export VM_HOME_DIR="$VM_HOME_DIR"
+export INSTALL_DIR="$INSTALL_DIR"
+docker run --init --rm --name vivado_container --mount type=bind,source="\$VM_HOME_DIR",target="/home/user" --mount type=bind,source="\$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE &
+echo "Started container"
+sleep 5
+
+# Start VNC viewer
+/Applications/VNC\\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full
+
+# While VNC viewer is running
+while ps aux | grep "[v]ncviewer" > /dev/null
+do
+    sleep 5
+done
+
+stop_container
+EOF
+
+chmod +x start_vivado.sh
+```
 
 ### References
 - [https://github.com/ichi4096/vivado-on-silicon-mac](https://github.com/ichi4096/vivado-on-silicon-mac)
