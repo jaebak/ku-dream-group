@@ -325,6 +325,10 @@ EOF
 chmod +x mac_run_vivado.sh
 ```
 
+### Issues
+
+If you find an issues in the above procedure, feel free to leave a comment at [https://github.com/jaebak/ku-dream-group/issues](https://github.com/jaebak/ku-dream-group/issues)
+
 ### References
 - [https://github.com/ichi4096/vivado-on-silicon-mac](https://github.com/ichi4096/vivado-on-silicon-mac)
 - [https://github.com/yokeTH/vivado-mac](https://github.com/yokeTH/vivado-mac)
