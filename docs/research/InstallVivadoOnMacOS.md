@@ -4,8 +4,8 @@ title:  Install Vivado on Apple silicon with MacOS
 
 ### Document history
 
-- 2026.06.03: Install nss3 library to run Vitis
-- 2026.04.14: First version
+- 2026.06.03: Install nss3 library to run Vitis (Jaebak Kim)
+- 2026.04.14: First version (Jaebak Kim)
 
 ### Goal
 
