@@ -2,6 +2,11 @@
 title:  Install Vivado on Apple silicon with MacOS
 ---
 
+### Document history
+
+- 2026.06.03: Install nss3 library to run Vitis
+- 2026.04.14: First version
+
 ### Goal
 
 Run Vivado 2025.2 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.
@@ -87,6 +92,10 @@ RUN apt-get install -y --no-install-recommends \
     python3-pip python3-dev build-essential git gcc-multilib g++ \
     ocl-icd-opencl-dev libjpeg62-dev libc6-dev-i386 graphviz make \
     unzip libtinfo5 xvfb libncursesw5 locales libswt-gtk-4-jni
+
+# install dependencies for Vitis
+RUN apt-get install -y --no-install-recommends \
+    libnss3
 
 # install vnc server (with recommended installs)
 RUN apt-get install -y \
