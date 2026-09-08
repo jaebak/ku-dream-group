@@ -4,12 +4,13 @@ title:  Install Vivado on Apple silicon with MacOS
 
 ### Document history
 
+- 2026.09.08: Update to vivado 2026.1 and change vnc client (Jaebak Kim)
 - 2026.06.03: Install nss3 library to run Vitis (Jaebak Kim)
 - 2026.04.14: First version (Jaebak Kim)
 
 ### Goal
 
-Run Vivado 2025.2 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.
+Run Vivado 2026.1 on Apple silicon with MacOS 15 and connect to FPGA using Mac's USB.
 
 ![](VivadoOnMacSilicon.jpeg){width="600"}
 
@@ -31,14 +32,14 @@ Can use an external usb drive for the disk space.
 
 There will be two folders used in installation, where the two folders can be set to be the same path.
 
-  - `VM_HOME_DIR`: Folder used for viertual machine home when running vivado. Requries few GB of disk space for docker and linux image.
+  - `VM_HOME_DIR`: Folder used for virtual machine home when running vivado. Requries few GB of disk space for docker and linux image.
   - `INSTALL_DIR`: Folder that holds vivado. Requires around 64 GB of disk space. Can use a USB drive with Mac OS Extended format for small disk cluster size.
 
 To make it easy to change path, we can set environment variable, where below is an example
 
 ```
-export VM_HOME_DIR=~/my_work
-export INSTALL_DIR=/Volumes/my_usb/Xilinx
+export VM_HOME_DIR=/Users/${USER}_nosearch/vivado_work
+export INSTALL_DIR=/Users/${USER}_nosearch/vivado_install/Xilinx
 ```
 
 #### 1. Install docker
@@ -56,10 +57,11 @@ D. Increase container SWAP setting in docker settings
 
 #### 2. Build Ubuntu 22.04 image
 
-A. Go to a work folder
+A. Create work folder, change permission, and go to a work folder
 
 ```
-mkdir $VM_HOME_DIR
+sudo mkdir -p $VM_HOME_DIR
+sudo chown $USER $VM_HOME_DIR
 cd $VM_HOME_DIR
 ```
 
@@ -134,11 +136,15 @@ C.  Build docker image
 
 #### 3. Install Vivado in a folder
 
-A. Make folder that can store Vivado, which needs more than 64 GB.
+A. Make folder that can store Vivado, which needs more than 64 GB. Also change permission.
 
-`mkdir $INSTALL_DIR`
+```
+sudo mkdir -p $INSTALL_DIR
+sudo chown $USER $INSTALL_DIR
+```
 
-B. Download Vivado 2025.2 (Linux Web installer) from 
+
+B. Download Vivado 2026.1 (Linux Self Extracting Web Installer) from 
 [https://www.xilinx.com/support/download.html](https://www.xilinx.com/support/download.html). An AMD account is required.
 
 C. Setup downloaded installer.
@@ -146,10 +152,10 @@ C. Setup downloaded installer.
 ```
 # Move installer to work folder
 cd $VM_HOME_DIR
-mv ~/Downloads/FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin .
+mv ~/Downloads/FPGAs_AdaptiveSoCs_Unified_SDI_2026.1_0616_1700_Lin64.bin .
 
 # Make installer an executable.
-chmod +x FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin
+chmod +x FPGAs_AdaptiveSoCs_Unified_SDI_2026.1_0616_1700_Lin64.bin
 ```
 
 D. Get into a Ubuntu container
@@ -169,15 +175,15 @@ E. (Inside Ubuntu container) Install Vivado
 cd ~
 
 # Setup AMD installer
-./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin --target /opt/Xilinx/installer --noexec
+./FPGAs_AdaptiveSoCs_Unified_SDI_2026.1_0616_1700_Lin64.bin --target /opt/Xilinx/installer --noexec
 
 # Create file for AMD account details
 /opt/Xilinx/installer/xsetup -b AuthTokenGen
 
 # Create installation setting
 cat > vivado_install_settings.txt << EOF
-#### Vivado ML Standard Install Configuration ####
-Edition=Vivado ML Standard
+#### Vivado Design Suite Install Configuration ####
+Edition=Vivado Design Suite
 
 Product=Vivado
 
@@ -229,6 +235,8 @@ export LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libs
 
 /opt/Xilinx/*/Vivado/bin/hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:3721" &
 source /opt/Xilinx/*/Vivado/settings64.sh
+
+cd
 /opt/Xilinx/*/Vivado/bin/vivado
 EOF
 
@@ -254,13 +262,36 @@ EOF
 
 `brew install openfpgaloader`
 
-#### 6. Install vncviewer
+#### 6. Install a vnc viewer application
 
-Download and install vnc viewer from [https://www.realvnc.com/en/connect/download/viewer/macos/](https://www.realvnc.com/en/connect/download/viewer/macos/)
+Download and install a vnc viewer application. Example: Royal TSX [https://www.royalapps.com/ts/mac/download](https://www.royalapps.com/ts/mac/download)
+
+One needs to install the vnc plugin for Royal TSX. Open Royal TSX, press Royal TSX in menu bar > Plugins... > VNC (based on RoyalVNC) Install
+
+#### 7. Download vivado "basic" license file
+
+Go to [https://account.amd.com/en/forms/license/license-form.html](https://account.amd.com/en/forms/license/license-form.html) and select "Vivado Basic Tier License, Node Locked License" > Generate Node-Locked License.
+
+Press select a host > Add a host and fill in as below.
+
+```
+Host Name: ANY NAME YOU WANT
+Operating System: Linux 64bit
+Host ID Type: Ethernet MAC
+HOST ID Value: aa:bb:cc:dd:ee:ff
+```
+
+Then press next a couple of times. Press the download button for downloading the license file. You should get the `Xilinx.lic` file.
+
+Run the below command to move it to the correct location.
+
+```
+mv ~/Downloads/Xilinx.lic $VM_HOME_DIR/.Xilinx
+```
 
 #### 7. Clean up files
 
-`rm -rf $VM_HOME_DIR/FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_1114_2157_Lin64.bin $VM_HOME_DIR/Dockerfile $VM_HOME_DIR/vivado_install_settings.txt $INSTALL_DIR/installer`
+`rm -rf $VM_HOME_DIR/FPGAs_AdaptiveSoCs_Unified_SDI_2026.1_0616_1700_Lin64.bin $VM_HOME_DIR/Dockerfile $VM_HOME_DIR/vivado_install_settings.txt $INSTALL_DIR/installer`
 
 ### Running Vivado
 
@@ -273,22 +304,22 @@ B. Run VNC server for GUI
 
 ```
 # If two folders were set to be same path during Vivado installation, can set paths to be the same below.
-export VM_HOME_DIR=~/my_work
-export INSTALL_DIR=/Volumes/my_usb/xilinx
+export VM_HOME_DIR=/Users/${USER}_nosearch/vivado_work
+export INSTALL_DIR=/Users/${USER}_nosearch/vivado_install/Xilinx
 
 cd $VM_HOME_DIR
 
 # Run VNC
-docker run --init -it --rm --name vivado_container --mount type=bind,source="$VM_HOME_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
+docker run --init -it --rm --name vivado_container --mount type=bind,source="$VM_HOME_DIR",target="/home/user" --mount type=bind,source="$INSTALL_DIR",target="/opt/Xilinx" --mac-address aa:bb:cc:dd:ee:ff -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE
 ```
 
-C. Connect to VNC server with `vncviewer`, where the password is `password`
+C. Connect to VNC server with a vncviewer. The password on the VNC server is set to be `password`
 
-`/Applications/VNC\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full`
+`open 'rtsx://vnc%3A//localhost%3A5901?using%3Dadhoc%26password%3Dpassword%26action%3Dconnect'`
 
 ### Simple script that runs Vivado on Mac with above commands.
 
-Below creates a script `mac_run_vivado.sh` that starts Vivado on the Mac. It also closes related programs when `vncviewer` is closed.
+Below creates a script `mac_run_vivado.sh` that starts Vivado on the Mac. It also closes related programs when Royal RTS is quit.
 
 ```
 cat > mac_run_vivado.sh <<EOF
@@ -315,15 +346,15 @@ done
 # Run container
 export VM_HOME_DIR="$VM_HOME_DIR"
 export INSTALL_DIR="$INSTALL_DIR"
-docker run --init --rm --name vivado_container --mount type=bind,source="\$VM_HOME_DIR",target="/home/user" --mount type=bind,source="\$INSTALL_DIR",target="/opt/Xilinx" -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE &
+docker run --init --rm --name vivado_container --mount type=bind,source="\$VM_HOME_DIR",target="/home/user" --mount type=bind,source="\$INSTALL_DIR",target="/opt/Xilinx" --mac-address aa:bb:cc:dd:ee:ff -p 127.0.0.1:5901:5901 --platform linux/amd64 x64-linux sudo -H -u user vncserver -DisconnectClients -NeverShared -nocursor -geometry 1920x1080 -SecurityTypes VncAuth -PasswordFile /vncpasswd -localhost no -verbose -fg -RawKeyboard -RemapKeys "0xffe9->0xff7e,0xffe7->0xff7e" -- LXDE &
 echo "Started container"
 sleep 5
 
 # Start VNC viewer
-/Applications/VNC\\ Viewer.app/Contents/MacOS/vncviewer localhost:5901 --ColorLevel=full
+open 'rtsx://vnc%3A//localhost%3A5901?using%3Dadhoc%26password%3Dpassword%26action%3Dconnect'
 
 # While VNC viewer is running
-while ps aux | grep "[v]ncviewer" > /dev/null
+while pgrep -x "RoyalTSX" > /dev/null
 do
     sleep 5
 done
