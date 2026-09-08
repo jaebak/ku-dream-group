@@ -4,7 +4,7 @@ title:  Install Vivado on Apple silicon with MacOS
 
 ### Document history
 
-- 2026.09.08: Update to vivado 2026.1 and change vnc client (Jaebak Kim)
+- 2026.09.08: Update to vivado 2026.1 and change vnc viewer (Jaebak Kim)
 - 2026.06.03: Install nss3 library to run Vitis (Jaebak Kim)
 - 2026.04.14: First version (Jaebak Kim)
 
