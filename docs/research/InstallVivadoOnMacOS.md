@@ -4,6 +4,7 @@ title:  Install Vivado on Apple silicon with MacOS
 
 ### Document history
 
+- 2026.10.13: Fixed crash of ILA ipcore by modifying `linux_run_vivado.sh`
 - 2026.09.08: Update to vivado 2026.1 and change vnc viewer (Jaebak Kim)
 - 2026.06.03: Install nss3 library to run Vitis (Jaebak Kim)
 - 2026.04.14: First version (Jaebak Kim)
@@ -231,7 +232,7 @@ A\. Make linux script to run vivado and hw_server
 cd $VM_HOME_DIR
 
 cat > linux_run_vivado.sh << EOF
-export LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-x11-2.0.so.0"
+export LD_PRELOAD="/lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libgdk-3.so.0"
 
 /opt/Xilinx/*/Vivado/bin/hw_server -e "set auto-open-servers xilinx-xvc:host.docker.internal:3721" &
 source /opt/Xilinx/*/Vivado/settings64.sh
