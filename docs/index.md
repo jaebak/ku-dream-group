@@ -1,4 +1,4 @@
-# Welcome to the Korea Univeristy Experimental Particle Physics DREAM group
+# Welcome to the Korea University Experimental Particle Physics DREAM group
 
 ![](gallery/JaebakAtTAMU.png){ width="300" }
 /// caption
